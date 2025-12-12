@@ -25,7 +25,7 @@ module.exports = function (req, res, url) {
 		case '/go_full': {
 			let presave = query.movieId && query.movieId.startsWith('m') ? query.movieId :
 				`m-${fUtil[query.noAutosave ? 'getNextFileId' : 'fillNextFileId']('movie-', '.xml')}`;
-			title = "The Video Maker From Vyond - Make a Video For YouTube!";
+			title = "Video Editor";
 			attrs = { 
 				data: process.env.SWF_URL + '/go_full.swf',
 				type: 'application/x-shockwave-flash', width: '100%', height: '100%',
@@ -36,7 +36,7 @@ module.exports = function (req, res, url) {
 				        'apiserver': '/', 'storePath': process.env.STORE_URL + '/<store>', 'type': '',
 					'clientThemePath': process.env.CLIENT_URL + '/<client_theme>', 'animationPath': process.env.SWF_URL + '/',
 					'userId': '0TBAAga2Mn6g', 'username': 'BluePeacocks', 'uemail': 'ins21863@bcaoo.com', 'numContact': '0', 'ut': 30, 
-					've': false, 'isEmbed': 0, 'nextUrl': 'https://action-ouranimate.herokuapp.com/videos/?movie=<movieId>', 
+					've': false, 'isEmbed': 0, 'nextUrl': '/player?movieId=<movieId>', 
 					'bgload': process.env.SWF_URL + '/go_full.swf', 'lid': '1', 'ctc': 'go', 'themeColor': 'silver', 'tlang': 'en_US',
 					'siteId': '13', 'templateshow': 'false', 'forceshow': 'false', 'appCode': 'go', 'lang': 'en', 'tmcc': 4048901, 
 					'fb_app_url': '/', 'is_published': '0', 'is_private_shared': '1', 'is_password_protected': false, 'upl': 1, 'hb': '1', 
@@ -233,31 +233,6 @@ if (self !== top) {
         </div>
     </div>
 </div>
-    <div class="templates" style="display: none;">
-    <div class="voice-vendor-ad" style="display: none;">
-        <div class="close"><a href="javascript:hideVoiceAdWidget()" onclick="javascript:return hideVoiceAdWidget()">×</a></div>
-        <div id="studio-voice-vendor-container">
-            <ul>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-iw" target="_blank" href="https://www.inwhatlanguage.com/goanimate-translations/" data-gtmv-page="/pageTracker/voicebanner/InWhatLanguage" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_iw.png"/></a></li>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-vb" target="_blank" href="https://voicebunny.com/?p=vyond" data-gtmv-page="/pageTracker/voicebanner/VoiceBunny" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_vb.png"/></a></li>
-                <li>
-                    <hr class="sperator"/>
-                    <a class="voiceover-tips gtm-ga-pageview-t2" target="_blank" href="https://josephanimate2021.github.io/video-maker-tips/tutorial-why-you-should-break-up-your-dialogue-audio-into-small-pieces-before-importing/" data-gtmv-page="/pageTracker/voicebanner/VoiceoverTips" onclick="setvoicebannercookie();"><span><i class="lightbulb"></i>Voiceover Tips &gt;</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-function setvoicebannercookie() { SetCookie('vbcdt','1568805507', 31, '/'); }
-function voiceBanner(bannerId) {
-    var banner = $('#voice-vendor-' + bannerId);
-    if (banner.length) {
-        banner.click();
-        window.open(banner.attr('href'), '_blank');
-    }
-}
-</script>
     <div id="previewPlayerContainer" style="display: none;">
         <div class="preview-player" id="previewPlayer">
             <h2>Preview Video</h2>
@@ -404,10 +379,10 @@ function voiceBanner(bannerId) {
                         });
                 })();
             }
-            show_voice_ad = true;
+            show_voice_ad = false;
             $('#studio_container').append($('div.templates div.voice-vendor-ad').clone());
             if (show_voice_ad) {
-                showVoiceAdWidget();
+                hideVoiceAdWidget();
             }
             $('div#studioBlock').css('height', '0px');
             $('#studio_holder').flash(studio_data);
@@ -430,43 +405,19 @@ function voiceBanner(bannerId) {
         }
         function showVoiceAdWidget() {
             show_voice_ad = true;
-            $('#studio_container div.voice-vendor-ad').css('display', 'block');
-            var widget_right = 0;
-            if (show_cc_ad) {
-                widget_right += $('div.studiotemplatebrowser').css('width');
-            }
-            $('#studio_container div.voice-vendor-ad').css('right', widget_right);
-            widget_right += $('#studio_container div.voice-vendor-ad').css('width');
-            if (show_worknote) {
-                $('#studio_container div.studio-worknote').css('right', widget_right);
-            }
-            ajust_studio();
             return false;
         }
         function hideVoiceAdWidget() {
             show_voice_ad = false;
-            $('#studio_container div.voice-vendor-ad').css('display', 'none');
-            var widget_right = 0;
-            if (show_cc_ad) {
-                widget_right += $('div.studiotemplatebrowser').css('width');
-            }
-            if (show_worknote) {
-                $('#studio_container div.studio-worknote').css('right', widget_right);
-            }
-            ajust_studio();
             return false;
         }
         function showWorknoteWidget() {
             show_worknote = true;
-            $('#studio_container div.studio-worknote').css('display', 'block');
             var widget_right = 0;
             if (show_cc_ad) {
-                widget_right += $('div.studiotemplatebrowser').css('width');
             }
             if (show_voice_ad) {
-                widget_right += $('#studio_container div.voice-vendor-ad').css('width');
             }
-            $('#studio_container div.studio-worknote').css('right', widget_right);
             ajust_studio();
             return false;
         }
@@ -883,32 +834,7 @@ ImporterFile.defaults.options.restricted_mime = ["font\/x-font-ttf","font\/vnd.m
         Release to start uploading    </div>
 </div>
     <div id="studio_holder" style="width: 960px;">${toObjectString(attrs, params)}</div>
-<div class="voice-vendor-ad" style="display: block; right: 0px;">
-        <div class="close"><a href="javascript:hideVoiceAdWidget()" onclick="javascript:return hideVoiceAdWidget()">×</a></div>
-        <div id="studio-voice-vendor-container">
-            <ul>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-iw" target="_blank" href="https://www.inwhatlanguage.com/goanimate-translations/" data-gtmv-page="/pageTracker/voicebanner/InWhatLanguage" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_iw.png"/></a></li>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-vb" target="_blank" href="https://voicebunny.com/?p=vyond" data-gtmv-page="/pageTracker/voicebanner/VoiceBunny" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_vb.png"/></a></li>
-                <li>
-                    <hr class="sperator"/>
-                    <a class="voiceover-tips gtm-ga-pageview-t2" target="_blank" href="https://josephanimate2021.github.io/video-maker-tips/tutorial-why-you-should-break-up-your-dialogue-audio-into-small-pieces-before-importing/" data-gtmv-page="/pageTracker/voicebanner/VoiceoverTips" onclick="setvoicebannercookie();"><span><i class="lightbulb"></i>Voiceover Tips &gt;</span></a>
-                </li>
-            </ul>
-        </div>
-    </div><div class="voice-vendor-ad" style="display: block; right: 0px;">
-        <div class="close"><a href="javascript:hideVoiceAdWidget()" onclick="javascript:return hideVoiceAdWidget()">×</a></div>
-        <div id="studio-voice-vendor-container">
-            <ul>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-iw" target="_blank" href="https://www.inwhatlanguage.com/goanimate-translations/" data-gtmv-page="/pageTracker/voicebanner/InWhatLanguage" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_iw.png"/></a></li>
-                <li><a class="gtm-ga-pageview-t2" id="voice-vendor-vb" target="_blank" href="https://voicebunny.com/?p=vyond" data-gtmv-page="/pageTracker/voicebanner/VoiceBunny" onclick="setvoicebannercookie();"><img src="https://josephanimate2021.github.io/static/55910a7cd204c37c/go/img/video_voice/btn_vb.png"/></a></li>
-                <li>
-                    <hr class="sperator"/>
-                    <a class="voiceover-tips gtm-ga-pageview-t2" target="_blank" href="https://josephanimate2021.github.io/video-maker-tips/tutorial-why-you-should-break-up-your-dialogue-audio-into-small-pieces-before-importing/" data-gtmv-page="/pageTracker/voicebanner/VoiceoverTips" onclick="setvoicebannercookie();"><span><i class="lightbulb"></i>Voiceover Tips &gt;</span></a>
-                </li>
-            </ul>
-        </div>
-    </div></div>
-</div><script type="text/javascript" id="">var _vyccq=window._vyccq||[];</script>
+<script type="text/javascript" id="">var _vyccq=window._vyccq||[];</script>
 <script type="text/javascript" id="" src="https://ga.vyond.com/ajax/cookie_policy"></script>
 <!-- END OF PAGE STRUCTURE -->
 <div id="offer_container">
