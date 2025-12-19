@@ -15,9 +15,11 @@ const chs = require('./character/save');
 const chu = require('./character/upload');
 const stl = require('./static/load');
 const stp = require('./static/page');
+const ntp = require('./static/page-nowide');
 const sts = require('./starter/save');
 const stt = require('./starter/thmb');
 const stm = require('./static/pagelvm');
+const ntm = require('./static/pagelvm-nowide');
 const mvl = require('./movie/load');
 const mvL = require('./movie/list');
 const mvm = require('./movie/meta');
@@ -43,7 +45,9 @@ const functions = [
 	chu,
 	stl,
 	stp,
+	ntp,
 	stm,
+	ntm,
 	mvl,
 	mvL,
 	chd,
