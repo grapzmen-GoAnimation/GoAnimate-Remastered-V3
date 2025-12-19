@@ -29,4 +29,4 @@ if exist notinstalled (
 :start
 echo GoAnimate Wrapper is now starting...
 echo Please navigate to http://localhost on your browser.
-npm start
+node main.js
