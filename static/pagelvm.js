@@ -1,4 +1,4 @@
-const fUtil = require('../misc/file');
+const fUtil = require('../fileUtil');
 const stuff = require('./info');
 
 function toAttrString(table) {
