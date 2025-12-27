@@ -1,1 +1,1 @@
-GoAnimate Wrapper 1.2.8.1
+GoAnimate Wrapper 1.2.8.2
