@@ -246,37 +246,53 @@ module.exports = (voiceName, text) => {
 				break;
 			}
 				case "readloud": {
-					const body = new URLSearchParams({
-						but1: text,
-						butS: 0,
-						butP: 0,
-						butPauses: 0,
-						butt0: "Submit",
-					}).toString();
 					const req = https.request(
 						{
-							hostname: "readloud.net",
+							hostname: "tts.town",														
 							path: voice.arg,
 							method: "POST",
-							headers: {
+							headers: { 							
 								"Content-Type": "application/x-www-form-urlencoded"
 							}
 						},
 						(r) => {
 							let buffers = [];
-							r.on("error", (e) => rej(e));
 							r.on("data", (b) => buffers.push(b));
 							r.on("end", () => {
 								const html = Buffer.concat(buffers);
 								const beg = html.indexOf("/tmp/");
 								const end = html.indexOf("mp3", beg) + 3;
-								const sub = html.subarray(beg, end).toString();
-	
-								https.get(`https://readloud.net${sub}`);
-								});
+								const path = html.subarray(beg, end).toString();
+
+								if (path.length > 0) {
+									https.get({
+										hostname: "tts.town",	
+										path: `/${path}`,
+										headers: {
+										}
+									}, (r) => {
+                                                                                let buffers = [];
+                                                                                r.on("data", (d) => buffers.push(d));
+                                                                                r.on("end", () => res(Buffer.concat(buffers)));
+                                                                        }).on("error", rej);
+								} else {
+									return rej("Could not find voice clip file in response.");
+								}
 							});
+						}
+					);
+					req.on("error", rej);
+					req.end(
+						new URLSearchParams({
+							but1: text,
+							butS: 0,
+							butP: 0,
+							butPauses: 0,
+							but: "Submit",
+						}).toString()
+					);
 					break;
-				}
+			}
         
         case "svox": {
 				var q = qs.encode({
