@@ -10,6 +10,7 @@ const ast = require('./asset/thmb');
 const chr = require('./character/redirect');
 const pmc = require('./character/premade');
 const chl = require('./character/load');
+const Chl = require("./character/list");
 const chd = require('./character/delete');
 const chs = require('./character/save');
 const chu = require('./character/upload');
@@ -17,6 +18,7 @@ const stl = require('./static/load');
 const stp = require('./static/page');
 const ntp = require('./static/page-nowide');
 const sts = require('./starter/save');
+const MvL = require("./starter/list");
 const stt = require('./starter/thmb');
 const stm = require('./static/pagelvm');
 const ntm = require('./static/pagelvm-nowide');
@@ -41,6 +43,7 @@ const functions = [
 	chr,
 	pmc,
 	chl,
+	Chl,
 	chs,
 	chu,
 	stl,
@@ -50,6 +53,7 @@ const functions = [
 	ntm,
 	mvl,
 	mvL,
+	MvL,
 	chd,
 	mvm,
 	mvs,
